@@ -1,0 +1,10 @@
+{
+  "imports": {
+    "@hono/hono": "jsr:@hono/hono@^4.6.3",
+    "@std/encoding": "jsr:@std/encoding@^1.0.5",
+    "@wok/djwt": "jsr:@wok/djwt@^3.0.2"
+  },
+  "tasks": {
+    "start": "deno --allow-net --unstable-kv index.ts"
+  }
+}
