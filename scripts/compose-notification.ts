@@ -91,6 +91,18 @@ export function composeNotification(
           `_achievements._types._${data.body.achievement}.title` as LocKey,
         ...notification,
       };
+    case "login":
+      return {
+        titleLocKey: "_notification.login",
+        ...notification,
+      };
+    case "exportCompleted":
+      return {
+        titleLocKey: `_notification.exportOf${
+          capitalize(data.body.exportedEntity as string)
+        }Completed` as LocKey,
+        ...notification,
+      };
     case "pollEnded":
       return {
         titleLocKey: "_notification.pollEnded",
@@ -113,4 +125,8 @@ export function composeNotification(
     default:
       return notification;
   }
+}
+
+function capitalize(text: string): string {
+  return text[0].toUpperCase() + text.substring(1);
 }
