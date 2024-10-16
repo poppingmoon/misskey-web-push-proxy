@@ -16,9 +16,15 @@ export async function decryptMessage({
 }): Promise<ArrayBuffer> {
   const message = new Uint8Array(buffer);
   const salt = message.slice(0, 16);
+  const rs = message.slice(16, 20).reduce((acc, value) => (acc << 8) + value);
   const idlen = message.at(20)!;
   const keyid = message.slice(21, 21 + idlen);
   const ciphertext = message.slice(21 + idlen);
+
+  const records = Array.from(
+    { length: Math.ceil(ciphertext.length / rs) },
+    (_, i) => ciphertext.slice(i * rs, (i + 1) * rs),
+  );
 
   const uaPublicRaw = decodeBase64Url(publicKey);
   const uaPrivate = await importPrivateKey(uaPublicRaw, privateKey);
@@ -65,6 +71,14 @@ export async function decryptMessage({
     ["sign"],
   );
   const cek = (await crypto.subtle.sign("HMAC", hmacKey, cekInfo)).slice(0, 16);
+  const encryptionKey = await crypto.subtle.importKey(
+    "raw",
+    cek,
+    "AES-GCM",
+    false,
+    ["decrypt"],
+  );
+
   const contentEncodingNonce = new TextEncoder().encode(
     "Content-Encoding: nonce",
   );
@@ -74,20 +88,24 @@ export async function decryptMessage({
   const nonce = (await crypto.subtle.sign("HMAC", hmacKey, nonceInfo))
     .slice(0, 12);
 
-  const encryptionKey = await crypto.subtle.importKey(
-    "raw",
-    cek,
-    "AES-GCM",
-    false,
-    ["decrypt"],
-  );
-  const plaintext = await crypto.subtle.decrypt(
-    { name: "AES-GCM", iv: nonce },
-    encryptionKey,
-    ciphertext,
+  const plaintext = new Uint8Array(ciphertext.length - records.length * 17);
+  await Promise.all(
+    records.map(async (record, seq) => {
+      const iv = new Uint8Array(nonce);
+      iv.set([iv.at(11)! ^ seq], 11);
+      const decriptedRecord = await crypto.subtle.decrypt(
+        { name: "AES-GCM", iv },
+        encryptionKey,
+        record,
+      );
+      plaintext.set(
+        new Uint8Array(decriptedRecord.slice(0, -1)),
+        seq * (rs - 17),
+      );
+    }),
   );
 
-  return plaintext.slice(0, -1);
+  return plaintext;
 }
 
 async function hmacSha256(
