@@ -5,7 +5,7 @@ import { Notification } from "../types.ts";
 import { fetchWithRetry } from "./fetch-with-retry.ts";
 import { kv } from "../index.ts";
 
-// https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages
+// https://developer.apple.com/documentation/usernotifications/sending-notification-requests-to-apns
 export async function sendNotificationApns(
   notification: Notification,
   apnsToken: string,
@@ -56,8 +56,8 @@ export async function getProviderToken(): Promise<string> {
     return cachedToken;
   }
 
-  const pem = Deno.env.get("APPLE_PRIVATE_KEY");
-  const keyId = Deno.env.get("APPLE_PRIVATE_KEY_ID");
+  const pem = Deno.env.get("APPLE_ENCRYPTION_KEY");
+  const keyId = Deno.env.get("APPLE_ENCRYPTION_KEY_ID");
   const teamId = Deno.env.get("APPLE_TEAM_ID");
 
   const encryptionKeyBase64 = pem!
