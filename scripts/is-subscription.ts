@@ -1,4 +1,4 @@
-import { Subscription } from "../types.ts";
+import type { Subscription } from "../types.ts";
 
 export function isSubscription(value: unknown): value is Subscription {
   const sub = value as Subscription;

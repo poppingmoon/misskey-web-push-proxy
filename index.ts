@@ -4,11 +4,11 @@ import { HTTPException } from "@hono/hono/http-exception";
 import { composeNotification } from "./scripts/compose-notification.ts";
 import { decryptMessage } from "./scripts/decrypt-message.ts";
 import { isSubscription } from "./scripts/is-subscription.ts";
+import { sendNotificationApns } from "./scripts/send-notification-apns.ts";
 import { sendNotificationFcm } from "./scripts/send-notification-fcm.ts";
 import { validateSubscription } from "./scripts/validate-subscription.ts";
 import { validateVapid } from "./scripts/validate-vapid.ts";
-import { Subscription } from "./types.ts";
-import { sendNotificationApns } from "./scripts/send-notification-apns.ts";
+import type { Subscription } from "./types.ts";
 
 const app = new Hono();
 export const kv = await Deno.openKv();

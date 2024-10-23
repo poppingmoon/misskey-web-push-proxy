@@ -1,7 +1,7 @@
 import { decodeBase64 } from "@std/encoding";
 import { create, decode, type Payload } from "@wok/djwt";
 
-import { Notification } from "../types.ts";
+import type { Notification } from "../types.ts";
 import { fetchWithRetry } from "./fetch-with-retry.ts";
 import { kv } from "../index.ts";
 

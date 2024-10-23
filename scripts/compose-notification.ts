@@ -1,4 +1,4 @@
-import { LocKey, Notification } from "../types.ts";
+import type { LocKey, Notification } from "../types.ts";
 
 // https://github.com/misskey-dev/misskey/blob/develop/packages/sw/src/scripts/create-notification.ts
 export function composeNotification(

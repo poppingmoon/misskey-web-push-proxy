@@ -1,5 +1,5 @@
 import { decodeBase64Url } from "@std/encoding";
-import { Payload, verify } from "@wok/djwt";
+import { type Payload, verify } from "@wok/djwt";
 
 // https://datatracker.ietf.org/doc/html/rfc8292#section-4.2
 export async function validateVapid(

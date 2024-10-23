@@ -1,9 +1,9 @@
 import { decodeBase64Url } from "@std/encoding";
 
-import { Subscription } from "../types.ts";
+import type { Subscription } from "../types.ts";
 import { importPrivateKey } from "./import-private-key.ts";
-import { sendNotificationFcm } from "./send-notification-fcm.ts";
 import { sendNotificationApns } from "./send-notification-apns.ts";
+import { sendNotificationFcm } from "./send-notification-fcm.ts";
 
 export async function validateSubscription(
   subscription: Subscription,

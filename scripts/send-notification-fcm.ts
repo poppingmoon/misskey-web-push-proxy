@@ -1,7 +1,7 @@
 import { decodeBase64 } from "@std/encoding";
 import { create } from "@wok/djwt";
 
-import { Notification } from "../types.ts";
+import type { Notification } from "../types.ts";
 import { fetchWithRetry } from "./fetch-with-retry.ts";
 
 // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages
