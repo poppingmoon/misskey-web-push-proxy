@@ -1,5 +1,5 @@
 import { decodeBase64 } from "@std/encoding";
-import { create } from "@wok/djwt";
+import { create, decode, type Payload } from "@wok/djwt";
 
 import { Notification } from "../types.ts";
 import { fetchWithRetry } from "./fetch-with-retry.ts";
@@ -53,7 +53,11 @@ export async function getProviderToken(): Promise<string> {
   const { value: cachedToken } = await kv.get(["appleProviderToken"]);
   const now = Math.trunc(Date.now() / 1000);
   if (typeof cachedToken == "string") {
-    return cachedToken;
+    const [_, { iat }, __] = decode<Payload>(cachedToken);
+    // Use the cached token if it was created in the last 30 minutes.
+    if (iat && now - 30 * 60 < iat && iat < now) {
+      return cachedToken;
+    }
   }
 
   const pem = Deno.env.get("APPLE_ENCRYPTION_KEY");
