@@ -33,7 +33,9 @@ app.get("/", (c) => {
 
 app.post("/subscriptions", async (c) => {
   const params = await c.req.json();
-  params.id ??= crypto.randomUUID();
+  if (params !== null && typeof params === "object") {
+    params.id ??= crypto.randomUUID();
+  }
   if (
     !isSubscription(params) || params.id.length < 36 ||
     (params.fcmToken === undefined && params.apnsToken === undefined)
@@ -58,7 +60,7 @@ app.post("/subscriptions", async (c) => {
   } catch (e) {
     throw new HTTPException(
       400,
-      { message: e.message },
+      { message: (e as Error).message },
     );
   }
 
