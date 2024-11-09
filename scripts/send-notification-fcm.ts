@@ -38,6 +38,7 @@ export async function sendNotificationFcm(
             image: notification.image,
           },
           android: {
+            priority: "high",
             notification: {
               title: notification.title,
               title_loc_key: notification.titleLocKey,
