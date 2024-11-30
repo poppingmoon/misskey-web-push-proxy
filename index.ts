@@ -1,6 +1,7 @@
 import { Hono } from "@hono/hono";
 import { HTTPException } from "@hono/hono/http-exception";
 
+import { openKv } from "./kv.ts";
 import { composeNotification } from "./scripts/compose-notification.ts";
 import { decryptMessage } from "./scripts/decrypt-message.ts";
 import { isSubscription } from "./scripts/is-subscription.ts";
@@ -11,7 +12,7 @@ import { validateVapid } from "./scripts/validate-vapid.ts";
 import type { Subscription } from "./types.ts";
 
 const app = new Hono();
-export const kv = await Deno.openKv();
+export const kv = await openKv();
 
 app.get("/", (c) => {
   return c.html(`
