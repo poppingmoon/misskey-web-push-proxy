@@ -23,7 +23,14 @@ export class Kv {
         versionstamp: null,
       };
     }
-    return this.kv.get(key);
+    const result = await this.kv.get<T>(key);
+    if (result.value) {
+      await this.cache.put(
+        new URL(key.toString(), "http://kv"),
+        new Response(JSON.stringify(result.value)),
+      );
+    }
+    return result;
   }
 
   async set(
