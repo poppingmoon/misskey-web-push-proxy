@@ -1,4 +1,5 @@
 import { Hono } from "@hono/hono";
+import { serveStatic } from "@hono/hono/deno";
 import { HTTPException } from "@hono/hono/http-exception";
 
 import { openKv } from "./kv.ts";
@@ -14,23 +15,7 @@ import type { Subscription } from "./types.ts";
 const app = new Hono();
 export const kv = await openKv();
 
-app.get("/", (c) => {
-  return c.html(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset='utf-8'>
-      <title>Misskey Web Push Proxy</title>
-    </head>
-    <body>
-      <h1>Misskey Web Push Proxy</h1>
-      <a href="https://github.com/poppingmoon/misskey-web-push-proxy">
-        https://github.com/poppingmoon/misskey-web-push-proxy
-      </a>
-    </body>
-    </html>
-  `);
-});
+app.get("/", serveStatic({ path: "./index.html" }));
 
 app.post("/subscriptions", async (c) => {
   const params = await c.req.json();
