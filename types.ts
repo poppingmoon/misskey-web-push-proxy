@@ -1,3 +1,17 @@
+import type { D1Database, KVNamespace } from "cloudflare_workers_types";
+
+export type Bindings = {
+  FIREBASE_PROJECT_ID: string;
+  FIREBASE_PRIVATE_KEY: string;
+  FIREBASE_CLIENT_EMAIL: string;
+  APPLE_BUNDLE_ID: string;
+  APPLE_ENCRYPTION_KEY: string;
+  APPLE_ENCRYPTION_KEY_ID: string;
+  APPLE_TEAM_ID: string;
+  KV: KVNamespace;
+  DB: D1Database;
+};
+
 export type Subscription = {
   id: string;
   fcmToken?: string;

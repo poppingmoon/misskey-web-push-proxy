@@ -1,0 +1,43 @@
+{
+  "$schema": "https://raw.githubusercontent.com/skymethod/denoflare/v0.6.0/common/config.schema.json",
+  "scripts": {
+    "misskey-web-push-proxy": {
+      "path": "index.ts",
+      "bindings": {
+        "FIREBASE_PROJECT_ID": {
+          "secret": "<Your Firebase project ID>"
+        },
+        "FIREBASE_PRIVATE_KEY": {
+          "secret": "<Your Firebase private key>"
+        },
+        "FIREBASE_CLIENT_EMAIL": {
+          "secret": "<Your Firebase client email>"
+        },
+        "APPLE_BUNDLE_ID": {
+          "secret": "<Your Apple bundle ID>"
+        },
+        "APPLE_ENCRYPTION_KEY": {
+          "secret": "<Your Apple encryption key>"
+        },
+        "APPLE_ENCRYPTION_KEY_ID": {
+          "secret": "<Your Apple encryption key ID>"
+        },
+        "APPLE_TEAM_ID": {
+          "secret": "<Your Apple team ID>"
+        },
+        "KV": {
+          "kvNamespace": "<Your KV namespace ID>"
+        },
+        "DB": {
+          "d1DatabaseUuid": "<Your D1 database ID>"
+        }
+      }
+    }
+  },
+  "profiles": {
+    "account1": {
+      "accountId": "<Your Account ID>",
+      "apiToken": "<Your API token>"
+    }
+  }
+}

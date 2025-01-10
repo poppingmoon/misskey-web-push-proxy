@@ -1,18 +1,18 @@
 import { decodeBase64 } from "@std/encoding";
 import { create, decode, type Payload } from "@wok/djwt";
 
-import type { Notification } from "../types.ts";
+import type { Bindings, Notification } from "../types.ts";
 import { fetchWithRetry } from "./fetch-with-retry.ts";
-import { kv } from "../index.ts";
 
 // https://developer.apple.com/documentation/usernotifications/sending-notification-requests-to-apns
 export async function sendNotificationApns(
   notification: Notification,
   apnsToken: string,
+  env: Bindings,
 ): Promise<Response> {
-  const bundleId = Deno.env.get("APPLE_BUNDLE_ID");
+  const bundleId = env.APPLE_BUNDLE_ID;
 
-  const providerToken = await getProviderToken();
+  const providerToken = await getProviderToken(env);
 
   return fetchWithRetry(
     `https://api.push.apple.com/3/device/${apnsToken}`,
@@ -49,8 +49,8 @@ export async function sendNotificationApns(
 }
 
 // https://developer.apple.com/documentation/usernotifications/establishing-a-token-based-connection-to-apns#Create-and-encrypt-your-JSON-token
-export async function getProviderToken(): Promise<string> {
-  const { value: cachedToken } = await kv.get(["appleProviderToken"]);
+export async function getProviderToken(env: Bindings): Promise<string> {
+  const cachedToken = await env.KV.get("appleProviderToken");
   const now = Math.trunc(Date.now() / 1000);
   if (typeof cachedToken == "string") {
     const [_, { iat }, __] = decode<Payload>(cachedToken);
@@ -60,9 +60,9 @@ export async function getProviderToken(): Promise<string> {
     }
   }
 
-  const pem = Deno.env.get("APPLE_ENCRYPTION_KEY");
-  const keyId = Deno.env.get("APPLE_ENCRYPTION_KEY_ID");
-  const teamId = Deno.env.get("APPLE_TEAM_ID");
+  const pem = env.APPLE_ENCRYPTION_KEY;
+  const keyId = env.APPLE_ENCRYPTION_KEY_ID;
+  const teamId = env.APPLE_TEAM_ID;
 
   const encryptionKeyBase64 = pem!
     .replaceAll("\\n", "")
@@ -82,7 +82,7 @@ export async function getProviderToken(): Promise<string> {
     encryptionKey,
   );
 
-  await kv.set(["appleProviderToken"], token, { expireIn: 30 * 60 * 1000 });
+  await env.KV.put("appleProviderToken", token, { expirationTtl: 30 * 60 });
 
   return token;
 }

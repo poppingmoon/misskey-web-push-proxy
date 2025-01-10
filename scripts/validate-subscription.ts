@@ -1,12 +1,13 @@
 import { decodeBase64Url } from "@std/encoding";
 
-import type { Subscription } from "../types.ts";
+import type { Bindings, Subscription } from "../types.ts";
 import { importPrivateKey } from "./import-private-key.ts";
 import { sendNotificationApns } from "./send-notification-apns.ts";
 import { sendNotificationFcm } from "./send-notification-fcm.ts";
 
 export async function validateSubscription(
   subscription: Subscription,
+  env: Bindings,
 ): Promise<void> {
   if (subscription.id.length < 36) {
     throw new Error("The id value is too short.");
@@ -21,7 +22,7 @@ export async function validateSubscription(
 
   if (subscription.fcmToken !== undefined) {
     try {
-      await sendNotificationFcm({}, subscription.fcmToken, true);
+      await sendNotificationFcm({}, subscription.fcmToken, env, true);
     } catch (_) {
       throw new Error("Failed to create a test notification via FCM.");
     }
@@ -29,7 +30,7 @@ export async function validateSubscription(
 
   if (subscription.apnsToken !== undefined) {
     try {
-      await sendNotificationApns({}, subscription.apnsToken);
+      await sendNotificationApns({}, subscription.apnsToken, env);
     } catch (_) {
       throw new Error("Failed to create a test notification via APNs.");
     }

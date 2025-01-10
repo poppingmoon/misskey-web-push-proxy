@@ -2,7 +2,8 @@
   "imports": {
     "@hono/hono": "jsr:@hono/hono@^4.6.16",
     "@std/encoding": "jsr:@std/encoding@^1.0.6",
-    "@wok/djwt": "jsr:@wok/djwt@^3.0.2"
+    "@wok/djwt": "jsr:@wok/djwt@^3.0.2",
+    "cloudflare_workers_types": "https://deno.land/x/denoflare@v0.6.0/common/cloudflare_workers_types.d.ts"
   },
   "tasks": {
     "start": "deno --allow-net --allow-read --unstable-kv index.ts"

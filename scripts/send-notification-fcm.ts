@@ -1,18 +1,19 @@
 import { decodeBase64 } from "@std/encoding";
 import { create } from "@wok/djwt";
 
-import type { Notification } from "../types.ts";
+import type { Bindings, Notification } from "../types.ts";
 import { fetchWithRetry } from "./fetch-with-retry.ts";
 
 // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages
 export async function sendNotificationFcm(
   notification: Notification,
   fcmToken: string,
+  env: Bindings,
   validateOnly?: boolean,
 ): Promise<Response> {
-  const projectId = Deno.env.get("FIREBASE_PROJECT_ID");
+  const projectId = env.FIREBASE_PROJECT_ID;
 
-  const accessToken = await getAccessToken();
+  const accessToken = await getAccessToken(env);
 
   return fetchWithRetry(
     `https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`,
@@ -77,9 +78,9 @@ export async function sendNotificationFcm(
 }
 
 // https://github.com/firebase/firebase-admin-node/blob/master/src/app/credential-internal.ts
-async function getAccessToken(): Promise<string> {
-  const pem = Deno.env.get("FIREBASE_PRIVATE_KEY");
-  const clientEmail = Deno.env.get("FIREBASE_CLIENT_EMAIL");
+async function getAccessToken(env: Bindings): Promise<string> {
+  const pem = env.FIREBASE_PRIVATE_KEY;
+  const clientEmail = env.FIREBASE_CLIENT_EMAIL;
 
   const privateKeyBase64 = pem!
     .replaceAll("\\n", "")
