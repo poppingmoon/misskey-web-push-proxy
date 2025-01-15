@@ -113,6 +113,7 @@ export function composeNotification(
       return {
         titleLocKey: "_notification.roleAssigned",
         body: data.body.role.name,
+        image: data.body.role.iconUrl,
         ...notification,
       };
     case "app":
