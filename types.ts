@@ -33,6 +33,7 @@ export type LocKey =
   | "_notification.yourFollowRequestAccepted"
   | "_notification.achievementEarned"
   | "_notification.pollEnded"
+  | "_notification.roleAssigned"
   | "_notification.testNotification"
   | "_notification.notificationWillBeDisplayedLikeThis"
   | "_notification.login"

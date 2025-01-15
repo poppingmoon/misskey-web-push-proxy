@@ -109,6 +109,12 @@ export function composeNotification(
         body: data.body.note.text,
         ...notification,
       };
+    case "roleAssigned":
+      return {
+        titleLocKey: "_notification.roleAssigned",
+        body: data.body.role.name,
+        ...notification,
+      };
     case "app":
       return {
         title: data.body.header ?? data.body.body,
