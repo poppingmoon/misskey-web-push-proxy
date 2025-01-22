@@ -116,6 +116,30 @@ export function composeNotification(
         image: data.body.role.iconUrl,
         ...notification,
       };
+    case "scheduleNote":
+      return {
+        titleLocKey: "_notification._types.scheduleNote",
+        body: data.body.errorType,
+        ...notification,
+      };
+    case "noteScheduled":
+      return {
+        titleLocKey: "_notification.noteScheduled",
+        body: data.body.draft.data.text,
+        ...notification,
+      };
+    case "scheduledNotePosted":
+      return {
+        titleLocKey: "_notification.scheduledNotePosted",
+        body: data.body.note.text,
+        ...notification,
+      };
+    case "scheduledNoteError":
+      return {
+        titleLocKey: "_notification.scheduledNoteError",
+        body: data.body.draft.reason,
+        ...notification,
+      };
     case "app":
       return {
         title: data.body.header ?? data.body.body,
