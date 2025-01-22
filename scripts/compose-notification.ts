@@ -10,85 +10,89 @@ export function composeNotification(
     subtitle: host,
     payload: data,
   };
-  switch (data.body.type) {
+  if (!data.body) {
+    return notification;
+  }
+  const body = truncateBody(data.body);
+  switch (body.type) {
     case "follow":
       return {
         titleLocKey: "_notification.youWereFollowed",
-        body: data.body.user.name ?? data.body.user.username,
-        image: data.body.user.avatarUrl,
+        body: getNameOrUsername(body.user) ?? "",
+        image: (body.user as { avatarUrl?: string })?.avatarUrl,
         ...notification,
       };
     case "mention":
       return {
         titleLocKey: "_notification.youGotMention",
-        titleLocArgs: [data.body.user.name ?? data.body.user.username],
-        body: data.body.note.text,
-        image: data.body.user.avatarUrl,
+        titleLocArgs: [getNameOrUsername(body.user) ?? ""],
+        body: (body.note as { text?: string })?.text,
+        image: (body.user as { avatarUrl?: string })?.avatarUrl,
         ...notification,
       };
     case "reply":
       return {
         titleLocKey: "_notification.youGotReply",
-        titleLocArgs: [data.body.user.name ?? data.body.user.username],
-        body: data.body.note.text,
-        image: data.body.user.avatarUrl,
+        titleLocArgs: [getNameOrUsername(body.user) ?? ""],
+        body: (body.note as { text?: string })?.text,
+        image: (body.user as { avatarUrl?: string })?.avatarUrl,
         ...notification,
       };
     case "renote":
       return {
         titleLocKey: "_notification.youRenoted",
-        titleLocArgs: [data.body.user.name ?? data.body.user.username],
-        body: data.body.note.text,
-        image: data.body.user.avatarUrl,
+        titleLocArgs: [getNameOrUsername(body.user) ?? ""],
+        body: (body.note as { text?: string })?.text,
+        image: (body.user as { avatarUrl?: string })?.avatarUrl,
         ...notification,
       };
     case "quote":
       return {
         titleLocKey: "_notification.youGotQuote",
-        titleLocArgs: [data.body.user.name ?? data.body.user.username],
-        body: data.body.note.text,
-        image: data.body.user.avatarUrl,
+        titleLocArgs: [getNameOrUsername(body.user) ?? ""],
+        body: (body.note as { text?: string })?.text,
+        image: (body.user as { avatarUrl?: string })?.avatarUrl,
         ...notification,
       };
     case "note":
       return {
         titleLocKey: "_notification.newNote",
-        titleLocArgs: [data.body.user.name ?? data.body.user.username],
-        body: data.body.note.text,
-        image: data.body.user.avatarUrl,
+        titleLocArgs: [getNameOrUsername(body.user) ?? ""],
+        body: (body.note as { text?: string })?.text,
+        image: (body.user as { avatarUrl?: string })?.avatarUrl,
         ...notification,
       };
     case "reaction":
       return {
         title: [
-          (data.body.reaction as string | undefined)
+          (body.reaction as string | undefined)
             ?.split("@")[0]
             .replaceAll(":", ""),
-          data.body.user.name ?? data.body.user.username,
+          getNameOrUsername(body.user),
         ].join(" "),
-        body: data.body.note.text,
-        image: data.body.user.avatarUrl,
+        body: (body.note as { text?: string })?.text,
+        image: (body.user as { avatarUrl?: string })?.avatarUrl,
         ...notification,
       };
     case "receiveFollowRequest":
       return {
         titleLocKey: "_notification.youReceivedFollowRequest",
-        body: data.body.user.name ?? data.body.user.username,
-        image: data.body.user.avatarUrl,
+        body: getNameOrUsername(body.user),
+        image: (body.user as { avatarUrl?: string })?.avatarUrl,
         ...notification,
       };
     case "followRequestAccepted":
       return {
         titleLocKey: "_notification.yourFollowRequestAccepted",
-        body: data.body.user.name ?? data.body.user.username,
-        image: data.body.user.avatarUrl,
+        body: (body.user as { name?: string })?.name ??
+          (body.user as { username?: string })?.username,
+        image: (body.user as { avatarUrl?: string })?.avatarUrl,
         ...notification,
       };
     case "achievementEarned":
       return {
         titleLocKey: "_notification.achievementEarned",
-        bodyLocKey:
-          `_achievements._types._${data.body.achievement}.title` as LocKey,
+        bodyLocKey: `_achievements._types._${body.achievement}.title` as LocKey,
         ...notification,
       };
     case "login":
@@ -99,52 +103,52 @@ export function composeNotification(
     case "exportCompleted":
       return {
         titleLocKey: `_notification.exportOf${
-          capitalize(data.body.exportedEntity as string)
+          capitalize(body.exportedEntity as string)
         }Completed` as LocKey,
         ...notification,
       };
     case "pollEnded":
       return {
         titleLocKey: "_notification.pollEnded",
-        body: data.body.note.text,
+        body: (body.note as { text?: string })?.text,
         ...notification,
       };
     case "roleAssigned":
       return {
         titleLocKey: "_notification.roleAssigned",
-        body: data.body.role.name,
-        image: data.body.role.iconUrl,
+        body: (body.role as { name?: string })?.name,
+        image: (body.role as { iconUrl?: string })?.iconUrl,
         ...notification,
       };
     case "scheduleNote":
       return {
         titleLocKey: "_notification._types.scheduleNote",
-        body: data.body.errorType,
+        body: body.errorType as string | undefined,
         ...notification,
       };
     case "noteScheduled":
       return {
         titleLocKey: "_notification.noteScheduled",
-        body: data.body.draft.data.text,
+        body: (body.draft as { data?: { text?: string } })?.data?.text,
         ...notification,
       };
     case "scheduledNotePosted":
       return {
         titleLocKey: "_notification.scheduledNotePosted",
-        body: data.body.note.text,
+        body: (body.note as { text?: string })?.text,
         ...notification,
       };
     case "scheduledNoteError":
       return {
         titleLocKey: "_notification.scheduledNoteError",
-        body: data.body.draft.reason,
+        body: (body.draft as { reason?: string })?.reason,
         ...notification,
       };
     case "app":
       return {
-        title: data.body.header ?? data.body.body,
-        body: data.body.header ? data.body.body : undefined,
-        image: data.body.icon,
+        title: (body.header ?? body.body) as string | undefined,
+        body: body.header ? body.body as string | undefined : undefined,
+        image: body.icon as string | undefined,
         ...notification,
       };
     case "test":
@@ -155,6 +159,32 @@ export function composeNotification(
       };
     default:
       return notification;
+  }
+}
+
+function truncateBody(body: Record<string, unknown>): Record<string, unknown> {
+  return {
+    ...body,
+    note: body.note && typeof body.note === "object"
+      ? {
+        ...body.note,
+        text: (body.note as { text: string | undefined })?.text
+          ?.substring(0, 500),
+        reactions: {},
+        reactionEmojis: {},
+        emojis: undefined,
+        reactionAndUserPairCache: undefined,
+      }
+      : undefined,
+  };
+}
+
+function getNameOrUsername(user: unknown): string | undefined {
+  const name = (user as { name?: string })?.name;
+  if (name) {
+    return name;
+  } else {
+    return (user as { username?: string })?.username;
   }
 }
 
