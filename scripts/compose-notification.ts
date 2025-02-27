@@ -120,6 +120,11 @@ export function composeNotification(
         image: (body.role as { iconUrl?: string })?.iconUrl,
         ...notification,
       };
+    case "createToken":
+      return {
+        titleLocKey: "_notification.createToken",
+        ...notification,
+      };
     case "scheduleNote":
       return {
         titleLocKey: "_notification._types.scheduleNote",
