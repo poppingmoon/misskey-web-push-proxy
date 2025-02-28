@@ -44,7 +44,7 @@ export async function decryptMessage({
     256,
   );
 
-  const prkKey = await hmacSha256(decodeBase64Url(auth), ecdhSecret);
+  const prkKey = await hmacSha256(decodeBase64Url(auth).buffer, ecdhSecret);
   const webPushInfo = new TextEncoder().encode("WebPush: info");
   const keyInfo = new Uint8Array(
     webPushInfo.length + 1 + uaPublicRaw.length + asPublicRaw.length + 1,
@@ -54,9 +54,9 @@ export async function decryptMessage({
   keyInfo.set(uaPublicRaw, webPushInfo.length + 1);
   keyInfo.set(asPublicRaw, webPushInfo.length + 1 + uaPublicRaw.length);
   keyInfo.set([1], keyInfo.length - 1);
-  const ikm = await hmacSha256(prkKey, keyInfo);
+  const ikm = await hmacSha256(prkKey, keyInfo.buffer);
 
-  const prk = await hmacSha256(salt, ikm);
+  const prk = await hmacSha256(salt.buffer, ikm);
   const contentEncodingAes128Gcm = new TextEncoder().encode(
     "Content-Encoding: aes128gcm",
   );
@@ -105,7 +105,7 @@ export async function decryptMessage({
     }),
   );
 
-  return plaintext;
+  return plaintext.buffer;
 }
 
 async function hmacSha256(

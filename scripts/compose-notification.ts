@@ -123,6 +123,7 @@ export function composeNotification(
     case "createToken":
       return {
         titleLocKey: "_notification.createToken",
+        bodyLocKey: "_notification.createTokenDescription",
         ...notification,
       };
     case "scheduleNote":
