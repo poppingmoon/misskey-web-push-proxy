@@ -16,6 +16,7 @@ export async function importPrivateKey(
   );
   const jwk = await crypto.subtle.exportKey("jwk", key);
   jwk.d = privateKey;
+  jwk.key_ops = ["deriveBits"];
   return crypto.subtle.importKey(
     "jwk",
     jwk,
