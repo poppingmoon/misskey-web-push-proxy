@@ -120,6 +120,12 @@ export function composeNotification(
         image: (body.role as { iconUrl?: string })?.iconUrl,
         ...notification,
       };
+    case "chatRoomInvitationReceived":
+      return {
+        titleLocKey: "_notification.chatRoomInvitationReceived",
+        body: (body.invitation as { room?: { name?: string } })?.room?.name,
+        ...notification,
+      };
     case "createToken":
       return {
         titleLocKey: "_notification.createToken",

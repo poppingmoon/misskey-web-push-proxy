@@ -44,6 +44,7 @@ export type LocKey =
   | "_notification.exportOfListsCompleted"
   | "_notification.pollEnded"
   | "_notification.roleAssigned"
+  | "_notification.chatRoomInvitationReceived"
   | "_notification.createToken"
   | "_notification.createTokenDescription"
   | "_notification._types.scheduleNote"
