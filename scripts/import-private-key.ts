@@ -1,7 +1,7 @@
 import { decodeBase64Url } from "@std/encoding";
 
 export async function importPrivateKey(
-  publicKey: string | Uint8Array,
+  publicKey: string | Uint8Array<ArrayBuffer>,
   privateKey: string,
 ): Promise<CryptoKey> {
   const publicKeyRaw = typeof publicKey === "string"
