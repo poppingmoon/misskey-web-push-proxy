@@ -33,8 +33,8 @@ via Firebase Cloud Messaging or Apple Push Notification service.
 
 1. Install Denoflare
    - ```sh
-     deno install --global --allow-import=cdn.skypack.dev:443,deno.land:443,jsr.io:443,raw.githubusercontent.com:443 --allow-write --unstable-worker-options --allow-read --allow-net --allow-env --allow-run --name denoflare --force \
-     https://raw.githubusercontent.com/skymethod/denoflare/0087ded3efefe068711b60fb2480e3e8386ce172/cli/cli.ts
+     deno install --global -A --unstable-worker-options --name denoflare --force \
+     https://raw.githubusercontent.com/skymethod/denoflare/v0.7.0/cli/cli.ts
      ```
 2. Create a KV namespace.
 3. Create a D1 database.
@@ -51,7 +51,7 @@ via Firebase Cloud Messaging or Apple Push Notification service.
      )
      ```
 4. Rename `.denoflare.example` to `.denoflare` and fill in the values.
-5. Run `denoflare push misskey-web-push-proxy --compatibility-date 2024-11-11`.
+5. Run `denoflare push misskey-web-push-proxy --compatibility-date 2025-09-15`.
 
 ## Sequence diagram
 
