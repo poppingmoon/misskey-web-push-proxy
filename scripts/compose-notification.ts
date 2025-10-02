@@ -135,28 +135,33 @@ export function composeNotification(
             bodyLocKey: "_notification.createTokenDescription",
             ...notification,
           };
-        case "scheduleNote":
-          return {
-            titleLocKey: "_notification._types.scheduleNote",
-            body: body.errorType as string | undefined,
-            ...notification,
-          };
-        case "noteScheduled":
-          return {
-            titleLocKey: "_notification.noteScheduled",
-            body: (body.draft as { data?: { text?: string } })?.data?.text,
-            ...notification,
-          };
         case "scheduledNotePosted":
           return {
             titleLocKey: "_notification.scheduledNotePosted",
             body: (body.note as { text?: string })?.text,
             ...notification,
           };
+        case "scheduledNotePostFailed":
+          return {
+            titleLocKey: "_notification.scheduledNotePostFailed",
+            ...notification,
+          };
+        case "scheduleNote":
+          return {
+            titleLocKey: "_notification._types.scheduleNote",
+            body: body.errorType as string | undefined,
+            ...notification,
+          };
         case "scheduledNoteError":
           return {
             titleLocKey: "_notification.scheduledNoteError",
             body: (body.draft as { reason?: string })?.reason,
+            ...notification,
+          };
+        case "noteScheduled":
+          return {
+            titleLocKey: "_notification.noteScheduled",
+            body: (body.draft as { data?: { text?: string } })?.data?.text,
             ...notification,
           };
         case "app":
