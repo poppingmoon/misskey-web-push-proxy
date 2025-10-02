@@ -1,7 +1,8 @@
 {
-  "version": "4",
+  "version": "5",
   "specifiers": {
     "jsr:@hono/hono@^4.7.2": "4.7.2",
+    "jsr:@std/encoding@*": "1.0.7",
     "jsr:@std/encoding@0.221": "0.221.0",
     "jsr:@std/encoding@^1.0.7": "1.0.7",
     "jsr:@wok/djwt@^3.0.2": "3.0.2"
