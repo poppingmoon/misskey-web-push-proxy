@@ -49,8 +49,6 @@ export type LocKey =
   | "_notification.createTokenDescription"
   | "_notification.scheduledNotePosted"
   | "_notification.scheduledNotePostFailed"
-  | "_notification._types.scheduleNote"
-  | "_notification.scheduledNoteError"
   | "_notification.noteScheduled"
   | "_notification.testNotification"
   | "_notification.notificationWillBeDisplayedLikeThis"

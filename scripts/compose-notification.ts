@@ -148,13 +148,13 @@ export function composeNotification(
           };
         case "scheduleNote":
           return {
-            titleLocKey: "_notification._types.scheduleNote",
+            titleLocKey: "_notification.scheduledNotePostFailed",
             body: body.errorType as string | undefined,
             ...notification,
           };
         case "scheduledNoteError":
           return {
-            titleLocKey: "_notification.scheduledNoteError",
+            titleLocKey: "_notification.scheduledNotePostFailed",
             body: (body.draft as { reason?: string })?.reason,
             ...notification,
           };
