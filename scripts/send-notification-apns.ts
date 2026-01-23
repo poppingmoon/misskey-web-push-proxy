@@ -37,6 +37,7 @@ export async function sendNotificationApns(
             "loc-key": notification.bodyLocKey,
             "loc-args": notification.bodyLocArgs,
           },
+          sound: "default",
         },
         payload: notification.payload,
       }),
