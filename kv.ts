@@ -17,11 +17,16 @@ export class Kv {
   async get<T = unknown>(key: Deno.KvKey): Promise<Deno.KvEntryMaybe<T>> {
     const cached = await this.cache.match(new URL(key.toString(), "http://kv"));
     if (cached) {
-      return {
-        key,
-        value: await cached.json(),
-        versionstamp: null,
-      };
+      try {
+        const value = await cached.json();
+        return {
+          key,
+          value,
+          versionstamp: null,
+        };
+      } catch (_) {
+        // Ignore malformed cache.
+      }
     }
     const result = await this.kv.get<T>(key);
     if (result.value) {
