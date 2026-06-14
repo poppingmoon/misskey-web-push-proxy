@@ -141,10 +141,13 @@ app.post("/subscriptions/:id", async (c) => {
     return c.body(null, 204);
   } catch (e) {
     const status = (e as Response).status;
-    if (status === 401 || status === 403 || status === 404) {
-      await c.env.DB.prepare("DELETE FROM subscriptions WHERE id = ?").bind(id)
-        .run();
-      throw new HTTPException(410);
+    switch (status) {
+      case 401 | 403 | 404 | 410: {
+        await c.env.DB.prepare("DELETE FROM subscriptions WHERE id = ?")
+          .bind(id)
+          .run();
+        throw new HTTPException(410);
+      }
     }
     throw new HTTPException();
   }
