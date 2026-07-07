@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: deno
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      deno:
+        patterns:
+          - "*"

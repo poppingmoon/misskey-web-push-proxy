@@ -1,9 +1,9 @@
 {
   "imports": {
-    "@hono/hono": "jsr:@hono/hono@^4.7.2",
-    "@std/encoding": "jsr:@std/encoding@^1.0.7",
+    "@hono/hono": "jsr:@hono/hono@^4.12.28",
+    "@std/encoding": "jsr:@std/encoding@^1.0.11",
     "@wok/djwt": "jsr:@wok/djwt@^3.0.2",
-    "cloudflare_workers_types": "https://deno.land/x/denoflare@v0.6.0/common/cloudflare_workers_types.d.ts"
+    "cloudflare_workers_types": "https://deno.land/x/denoflare@v0.7.0/common/cloudflare_workers_types.d.ts"
   },
   "tasks": {
     "start": "deno --allow-net --allow-read --unstable-kv index.ts"
