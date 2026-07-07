@@ -1,7 +1,7 @@
 {
   "imports": {
-    "@hono/hono": "jsr:@hono/hono@^4.7.2",
-    "@std/encoding": "jsr:@std/encoding@^1.0.7",
+    "@hono/hono": "jsr:@hono/hono@^4.12.28",
+    "@std/encoding": "jsr:@std/encoding@^1.0.11",
     "@wok/djwt": "jsr:@wok/djwt@^3.0.2"
   },
   "tasks": {
