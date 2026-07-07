@@ -107,7 +107,10 @@ app.post("/subscriptions/:id", async (c) => {
   } catch (e) {
     const status = (e as Response).status;
     switch (status) {
-      case 401 | 403 | 404 | 410: {
+      case 401:
+      case 403:
+      case 404:
+      case 410: {
         await kv.delete(["subscriptions", id]);
         throw new HTTPException(410);
       }
