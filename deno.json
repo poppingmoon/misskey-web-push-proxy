@@ -1,6 +1,6 @@
 {
   "imports": {
-    "@hono/hono": "jsr:@hono/hono@^4.12.30",
+    "@hono/hono": "jsr:@hono/hono@^4.12.31",
     "@std/encoding": "jsr:@std/encoding@^1.0.11",
     "@wok/djwt": "jsr:@wok/djwt@^3.0.2"
   },
