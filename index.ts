@@ -1,3 +1,4 @@
+import { serveStatic } from "@hono/deno";
 import { Hono } from "@hono/hono";
 import { HTTPException } from "@hono/hono/http-exception";
 
