@@ -1,12 +1,19 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@hono/deno@^1.0.2": "1.0.2",
     "jsr:@hono/hono@^4.13.9": "4.13.10",
     "jsr:@std/encoding@0.221": "0.221.0",
     "jsr:@std/encoding@^1.0.11": "1.0.11",
     "jsr:@wok/djwt@^3.0.2": "3.0.2"
   },
   "jsr": {
+    "@hono/deno@1.0.2": {
+      "integrity": "b4f8c5d5f8d922e56062639824857e54938f71a15c5daa871161bfd95fa82f31",
+      "dependencies": [
+        "jsr:@hono/hono"
+      ]
+    },
     "@hono/hono@4.13.10": {
       "integrity": "c27a60121731a2929bbccd020116cbb483ec34af8a0e64e6fb7ab7c47928aaf7"
     },
@@ -25,6 +32,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@hono/deno@^1.0.2",
       "jsr:@hono/hono@^4.13.9",
       "jsr:@std/encoding@^1.0.11",
       "jsr:@wok/djwt@^3.0.2"

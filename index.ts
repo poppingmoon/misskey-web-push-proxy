@@ -1,5 +1,5 @@
+import { serveStatic } from "@hono/deno";
 import { Hono } from "@hono/hono";
-import { serveStatic } from "@hono/hono/deno";
 import { HTTPException } from "@hono/hono/http-exception";
 
 import { openKv } from "./kv.ts";
