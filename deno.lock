@@ -2,8 +2,8 @@
   "version": "5",
   "specifiers": {
     "jsr:@hono/deno@^1.0.3": "1.0.3",
-    "jsr:@hono/hono@^4.13.14": "4.13.16",
-    "jsr:@hono/hono@^4.13.9": "4.13.16",
+    "jsr:@hono/hono@^4.13.16": "4.13.17",
+    "jsr:@hono/hono@^4.13.9": "4.13.17",
     "jsr:@std/encoding@0.221": "0.221.0",
     "jsr:@std/encoding@^1.0.11": "1.0.11",
     "jsr:@wok/djwt@^3.0.2": "3.0.2"
@@ -15,8 +15,8 @@
         "jsr:@hono/hono@^4.13.9"
       ]
     },
-    "@hono/hono@4.13.16": {
-      "integrity": "e211ca7541bcbe3a835ec425cb428787f116b54fdc1fe8037077d4531f46c93e"
+    "@hono/hono@4.13.17": {
+      "integrity": "4173fc88f11d5069a97aa9e948210bfd332646072b973fa989f3d4d6f542e62d"
     },
     "@std/encoding@0.221.0": {
       "integrity": "d1dd76ef0dc5d14088411e6dc1dede53bf8308c95d1537df1214c97137208e45"
@@ -34,7 +34,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@hono/deno@^1.0.3",
-      "jsr:@hono/hono@^4.13.14",
+      "jsr:@hono/hono@^4.13.16",
       "jsr:@std/encoding@^1.0.11",
       "jsr:@wok/djwt@^3.0.2"
     ]
